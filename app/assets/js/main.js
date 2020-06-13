@@ -9,7 +9,7 @@ let userInput;
 function tryLogin() {
   let user = document.getElementById('pseudo');
   let pass = document.getElementById('password');
-  let request = require('electron').remote.net.request('https://falazia.fr/auth/start?username=' + user.value + '&password=' + Sha256.hash(pass.value));
+  const request = require('electron').remote.net.request('https://falazia.fr/auth/start?username=' + user.value + '&password=' + Sha256.hash(pass.value));
   request.on('response', (response) => {
     console.log(`STATUS: ${response.statusCode}`);
     response.on('data', (chunk) => {
@@ -18,19 +18,22 @@ function tryLogin() {
           /*if(document.getElementById('checkbox').checked) {
             loggerLogin.log('Logged in as ' + user.value);
             ipcRenderer.send('logged-in');
-          } else {*/
-            //credentialsSaver();
+          } else {
+            credentialsSaver();*/
             loggerLogin.log('Logged in as ' + user.value);
-            userInput = user.value;
+            //userInput = user.value;
+            request.end();
             ipcRenderer.send('logged-in');
           //}
         } else if(chunk == 'error_password') {
           loggerLogin.log('Bad credentials');
           dialog.showErrorBox("Authentification", "Mauvais couple pseudo/password !");
+          request.end();
         }
       } else {
         loggerLogin.log('Error contact support !');
         dialog.showErrorBox("Authentification", "Erreur inexplicable, merci de contacter Bakhaow");
+        request.end();
       }
     });
   });
@@ -39,7 +42,8 @@ function tryLogin() {
 
 function init() {
   createNotExisting(dir);
-  /*let usair = "";
+  /*createNotExisting(dir + "/vOptions");
+  let usair = "";
   try {
       let data = fs.readFileSync(dir + "/vOptions/user.txt", 'utf8');
       usair = data;
@@ -52,7 +56,7 @@ function init() {
 
 init();
 
-function credentialsSaver() {
+/*function credentialsSaver() {
   loggerLogin.log('Saving credentials');
   createNotExisting(dir + '/vOptions');
   fs.writeFile(dir + "/vOptions/user.txt", user.value, function(err) {
@@ -60,7 +64,7 @@ function credentialsSaver() {
         return loggerLogin.log(err);
     }
   })
-}
+}*/
 
 function ramSaver() {
   loggerLogin.log('Saving ram');
