@@ -1,12 +1,12 @@
 {
-  "name": "falazialauncher",
+  "name": "falazia",
   "version": "1.0.0",
   "description": "Launcher For Falazia Server",
   "main": "index.js",
   "repository": "https://github.com/Bakhaow/FalaziaLauncher.git",
   "scripts": {
     "postinstall": "install-app-deps",
-    "start": "npm install && electron ./app",
+    "start": "electron .",
     "pack": "electron-builder build --dir",
     "dist": "electron-builder build"
   },
