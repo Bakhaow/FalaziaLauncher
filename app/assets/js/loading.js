@@ -1,4 +1,3 @@
-const request = require('request');
 const { exec } = require('child_process');
 const loggerDL = LoggerUtil('%c[DL]', 'color: dimgrey; font-weight: bold;');
 const loggerLaunch = LoggerUtil('%c[Launch]', 'color: #abcdefg; font-weight: bold;');

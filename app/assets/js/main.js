@@ -1,4 +1,5 @@
 const { ipcRenderer, remote, shell } = require('electron');
+const request = require('request');
 const { dialog } = require('electron').remote;
 const fs = require('fs');
 const LoggerUtil = require('./assets/js/loggerutil');
@@ -6,44 +7,36 @@ const loggerLogin = LoggerUtil('%c[Login]', 'color: #209b07; font-weight: bold;'
 const dir = remote.app.getPath('userData') + '/FalaziaLauncher';
 let userInput;
 
-function tryLogin() {
+function log() {
   let user = document.getElementById('pseudo');
   let pass = document.getElementById('password');
-  var request = require('electron').remote.net.request('https://falazia.fr/auth/start?username=' + user.value + '&password=' + Sha256.hash(pass.value));
-  request.on('response', (response) => {
-    console.log(`STATUS: ${response.statusCode}`);
-    response.on('data', (chunk) => {
-      if(response.statusCode == 200) {
-        if(chunk == 'success_ok') {
-          /*if(document.getElementById('checkbox').checked) {
-            loggerLogin.log('Logged in as ' + user.value);
-            ipcRenderer.send('logged-in');
-          } else {
-            credentialsSaver();*/
-            loggerLogin.log('Logged in as ' + user.value);
-            //userInput = user.value;
-            //ipcRenderer.send('logged-in');
-            request.end();
-          //}
-        } else if(chunk == 'error_password') {
-          loggerLogin.log('Bad credentials');
-          dialog.showErrorBox("Authentification", "Mauvais couple pseudo/password !");
-          request.end();
-        }
-      } else {
-        loggerLogin.log('Error contact support !');
-        dialog.showErrorBox("Authentification", "Erreur inexplicable, merci de contacter Bakhaow");
-        request.end();
+  const url = 'https://falazia.fr/auth/start?username=' + user.value + '&password=' + Sha256.hash(pass.value);
+  request({
+    url: url,
+    json: false
+  }, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      loggerLogin.log("trying to connect");
+      if(body == 'success_ok'){
+        loggerLogin.log('Logged in as ' + user.value);
+        userInput = user.value;
+        ipcRenderer.send('logged-in');
+      } else if(body == 'error_password'){
+        loggerLogin.log('Bad credentials');
+        dialog.showErrorBox("Authentification", "Mauvais couple pseudo/password !");
       }
-    });
-  });
-  request.end();
+      else {
+        //NO STATUS NO MSG
+        dialog.showErrorBox("Erreur:","Veuillez contacter Bakhaow. Code:NSNMSG")
+        loggerLogin.log('Login failed cause : none, please contact Bakhaow.');
+      }
+    }
+  })
 }
 
 function init() {
   createNotExisting(dir);
-  /*createNotExisting(dir + "/vOptions");
-  let usair = "";
+  /*let usair = "";
   try {
       let data = fs.readFileSync(dir + "/vOptions/user.txt", 'utf8');
       usair = data;
