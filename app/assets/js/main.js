@@ -9,7 +9,7 @@ let userInput;
 function tryLogin() {
   let user = document.getElementById('pseudo');
   let pass = document.getElementById('password');
-  const request = require('electron').remote.net.request('https://falazia.fr/auth/start?username=' + user.value + '&password=' + Sha256.hash(pass.value));
+  var request = require('electron').remote.net.request('https://falazia.fr/auth/start?username=' + user.value + '&password=' + Sha256.hash(pass.value));
   request.on('response', (response) => {
     console.log(`STATUS: ${response.statusCode}`);
     response.on('data', (chunk) => {
@@ -22,8 +22,8 @@ function tryLogin() {
             credentialsSaver();*/
             loggerLogin.log('Logged in as ' + user.value);
             //userInput = user.value;
+            //ipcRenderer.send('logged-in');
             request.end();
-            ipcRenderer.send('logged-in');
           //}
         } else if(chunk == 'error_password') {
           loggerLogin.log('Bad credentials');
