@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Falazia Launcher - BK</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script type="text/javascript" src="assets/js/sha256.js"></script>
+    <script type="text/javascript" src="assets/js/main.js"></script>
+  </head>
+  <body style="background: no-repeat url('assets/img/background.png');">
+
+    <img src="assets/img/options.png" onclick="options();" role="button" style="position: fixed;top: 0;left:0;width: 18px;margin: 5px;z-index: 1000;">
+    <img src="assets/img/close.png" onclick="closeLauncher();" role="button" style="position: fixed;top: 0;right:0;width: 18px;margin: 5px;z-index: 1000;">
+    <img src="assets/img/side.png" onclick="minimizeLauncher();" role="button" style="position: fixed;top: 0;right:0;width: 18px;margin-top: 5px;margin-right: 34px;z-index: 1000;">
+    <div class="login">
+    	<div class="container">
+    			<div class="tab-content">
+            <img src="assets/img/logo.png" style="margin-top: -39px;margin-bottom: 20px;margin-left: 18px;">
+    				<div class="tab-pane active" id="login">
+    					<form class="form-horizontal login-form">
+
+                            <!-- Username -->
+    						<div class="form-group relative">
+    							<input class="form-control input-lg" id="pseudo" placeholder="Pseudo" required="" type="text"> <i class="fa fa-user"></i>
+                            </div>
+
+                            <!-- Password -->
+    						<div class="form-group relative">
+    							<input class="form-control input-lg" id="password" placeholder="Mot de Passe" required="" type="password"> <i class="fa fa-lock"></i>
+                            </div>
+
+
+                            <div class="toggle-button-cover">
+                                <div class="button b2" id="button-11">
+                                  <input type="checkbox" class="checkbox" id="checkbox" name="checkbox">
+                                  <div class="knobs">
+                                    <span></span>
+                                  </div>
+                                  <div class="layer"></div>
+                                </div>
+                                <p style="position: fixed;top: 335px;left:150px;font-size: 17px;color: white;">Se souvenir</p>
+                            </div>
+
+                            <!-- Button -->
+    						<div class="form-group">
+    							<button class="btn btn-lg btn-block" type="submit" onclick="tryLogin();" style="margin-top: 11px;">Jouer</button>
+
+                            </div>
+                            <a href="" class="text-after" onclick="shell.openExternal('https://falazia.fr');">Mot de passe oublié ?</a> <br>
+                            <a href="" class="text-after" onclick="shell.openExternal('https://falazia.fr');">Se créer un compte !</a>
+                            <hr />
+
+                            <!-- Social buttons -->
+                            <div class="social">
+                              <a href="" onclick="shell.openExternal('https://twitter.com/FalaziaM');" class="icon-button twitter"><i class="icon-twitter"></i><span></span></a>
+                              <a href="" onclick="shell.openExternal('https://facebook.com/FalaziaM');" class="icon-button facebook"><i class="icon-facebook"></i><span></span></a>
+                              <a href="" onclick="shell.openExternal('https://discord.gg/ajBhaya');" class="icon-button discord"><i class="fab fa-discord" style="color:black"></i><span></span></a>
+                </div>
+
+    					</form>
+    				</div>
+    			</div>
+    	</div>
+    </div>
+
+
+
+
+  </body>
+</html>

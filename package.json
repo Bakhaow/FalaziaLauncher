@@ -1,0 +1,38 @@
+{
+  "name": "falazialauncher",
+  "version": "1.0.0",
+  "description": "Launcher For Falazia Server",
+  "main": "index.js",
+  "repository": "none",
+  "scripts": {
+    "postinstall": "install-app-deps",
+    "start": "npm install && electron ./app",
+    "pack": "electron-builder build --dir",
+    "dist": "electron-builder build"
+  },
+  "build": {
+    "appId": "falazia",
+    "win": {
+      "target": "NSIS",
+      "icon": "app/assets/img/logo.ico"
+    }
+  },
+  "keywords": [
+    "Bakhaow",
+    "Launcher",
+    "Falazia",
+    "Minecraft"
+  ],
+  "author": "Bakhaow",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "path": "^0.12.7",
+    "request": "^2.88.2",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "^22.7.0"
+  }
+}

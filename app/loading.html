@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Loading</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <script type="text/javascript" src="assets/js/main.js"></script>
+    <script type="text/javascript" src="assets/js/loading.js"></script>
+
+  </head>
+  <body style="background: no-repeat url('assets/img/background.png');">
+
+    <img src="assets/img/close.png" onclick="closeLauncher();" role="button" style="position: fixed;top: 0;right:0;width: 18px;margin: 5px;z-index: 1000;">
+    <img src="assets/img/side.png" onclick="minimizeLauncher();" role="button" style="position: fixed;top: 0;right:0;width: 18px;margin-top: 5px;margin-right: 34px;z-index: 1000;">
+    <div class="login">
+    	<div class="container">
+    			<div class="tab-content">
+            <img src="assets/img/logo.png" style="margin-top: -39px;margin-bottom: 20px;margin-left: 18px;">
+
+    			</div>
+          <div class="social" style="position: fixed;width: 64%;top: 17em;">
+          <hr />
+          <a href="https://twitter.com/FalaziaM" class="icon-button twitter"><i class="icon-twitter"></i><span></span></a>
+          <a href="https://facebook.com/FalaziaM" class="icon-button facebook"><i class="icon-facebook"></i><span></span></a>
+          <a href="https://discord.gg/ajBhaya" class="icon-button discord"><i class="fab fa-discord" style="color:black"></i><span></span></a>
+          </div>
+    </div>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <div style="text-align:center;margin:auto;" class="loader">
+      <div class="loader--label" id="load-label">
+        Téléchargement des assets..  <br>
+        Fermer le launcher pourrait causer des problèmes ...
+        Merci de patienter ...
+      </div>
+      <div class="loader--background">
+          <div class="loader--bar">
+      </div>
+
+    </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,475 @@
+@import url(https://fonts.googleapis.com/css?family=Varela);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css);
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css);
+@import url(https://netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css);
+
+/* Div tag that contains everything */
+.login {
+    font-family: 'Varela', sans-serif;
+    padding-top: 80px;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100%;
+    position: relative;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    display: flex;
+    align-items: center;
+}
+
+/* Make positions relative */
+.relative {
+    position: relative;
+}
+
+/* The box that has everything in it */
+.login-container-wrapper {
+    border-top: 3.5px solid #5AAE9C;
+    max-width: 400px;
+    margin: 2% auto 5%;
+    padding: 40px;
+    box-sizing: border-box;
+    background: rgba(57, 89, 116, 0.8);
+    position: relative;
+    background-size:cover;
+    background-blend-mode:saturation;
+}
+
+/* Icon color when you click on form */
+.login input:focus + .fa{
+    color: rgb(202, 182, 70);
+}
+
+/* Form position */
+.login-form .form-group {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+/* Form icons */
+.login-form i {
+    position: absolute;
+    top: 0;
+    left: 19px;
+    line-height:52px;
+    color: rgba(40, 52, 67, 1);
+    z-index:100;
+    font-size:16px;
+}
+
+/* Size and position of the input */
+.login-form .input-lg {
+    font-size: 16px;
+    height: 52px;
+    padding: 10px 25px;
+    border-radius: 0;
+}
+
+/* Color of input */
+.login input[type="text"],
+.login input[type="password"],
+.login input:focus {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 0px solid #4a525f;
+    color: rgb(172, 155, 62);
+    border-left: 50px solid rgba(189, 187, 187, 0.39);
+}
+
+/* Click on input */
+.login input:focus {
+    border-left: 50px solid rgba(189, 187, 187, 0.39);
+}
+
+/* Text inside input */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+    background-color: rgba(255, 255, 255, 0.9);
+    background-image: none;
+    color: rgb(0, 0, 0);
+    border-color: #FAFFBD;
+}
+
+.text-after {
+    margin-left: 5em;
+    margin-top: 1em;
+    color: white;
+}
+
+.text-after:hover {
+    margin-left: 5em;
+    margin-top: 1em;
+    color: white;
+}
+/* Button */
+.btn {
+    width: 100%;
+    height: 40px;
+    text-transform: uppercase;
+    border-radius:3px;
+    background-color: rgb(202, 182, 70);
+    color:#FFFFFF;
+    border-radius:2px 2px 12px 12px;
+    -webkit-border-radius:2px 2px 12px 12px;
+    -moz-border-radius:2px 2px 12px 12px;
+}
+
+/* When you hover over the button */
+.btn:hover{
+    background-color: rgb(172, 155, 62);
+    border-color: rgb(172, 155, 62);
+    box-shadow: 0px 5px 35px -5px rgb(172, 155, 62);
+    text-shadow:0 0 8px #fff;
+    color: #FFF;
+    outline:none;
+    cursor:pointer;
+}
+
+/* The social buttons */
+.icon-button {
+    background-color: white;
+    border-radius: 3.6rem;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 2.0rem;
+    height: 3.6rem;
+    line-height: 3.6rem;
+    margin: 0 5px;
+    position: relative;
+    text-align: center;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 3.6rem;
+}
+
+/* How the social buttons look before hover */
+.icon-button span {
+    border-radius: 0;
+    display: block;
+    height: 0;
+    left: 50%;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    width: 0;
+}
+
+/* After you hover over buttons */
+.icon-button:hover span {
+    width: 3.6rem;
+    height: 3.6rem;
+    border-radius: 3.6rem;
+    margin: -1.8rem;
+}
+
+/* Color for twitter button */
+.twitter span {
+    background-color: #4099ff;
+}
+
+/* Color for facebook button */
+.facebook span {
+    background-color: #3B5998;
+}
+
+/* Color for google button */
+.discord span {
+    background-color: #7289da;
+}
+
+/* Before click social button */
+.icon-button i {
+    background: none;
+    color: white;
+    height: 3.6rem;
+    left: 0;
+    line-height: 3.6rem;
+    position: absolute;
+    top: 0;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    width: 3.6rem;
+    z-index: 10;
+}
+
+/* After hovering over twitter button */
+.icon-button .icon-twitter {
+    color: #4099ff;
+}
+
+/* After hovering over facebook button */
+.icon-button .icon-facebook {
+    color: #3B5998;
+}
+
+/* After hovering over google button */
+.icon-button .icon-discord {
+    color: #db5a3c;
+}
+
+/* Text after hovering over social buttons */
+.icon-button:hover .icon-twitter,
+.icon-button:hover .icon-facebook,
+.icon-button:hover .icon-discord {
+    color: white;
+}
+
+/* Centers and resizes social buttons */
+.social {
+    text-align: center;
+    font-size: 20px;
+}
+
+.toggle-button-cover
+{
+    display: table-cell;
+    position: relative;
+    height: 33px;
+    box-sizing: border-box;
+}
+
+.button-cover
+{
+    height: 100px;
+    margin: 20px;
+    background-color: #fff;
+    box-shadow: 0 10px 20px -8px #c5d6d6;
+    border-radius: 4px;
+}
+
+.button-cover:before
+{
+    counter-increment: button-counter;
+    content: counter(button-counter);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: #d7e3e3;
+    font-size: 12px;
+    line-height: 1;
+    padding: 5px;
+}
+
+.button-cover, .knobs, .layer
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.button
+{
+    position: relative;
+    top: 50%;
+    width: 74px;
+    height: 36px;
+    margin: -20px auto 0 auto;
+    overflow: hidden;
+}
+
+.button.r, .button.r .layer
+{
+    border-radius: 100px;
+}
+
+.button.b2
+{
+    border-radius: 2px;
+}
+
+.checkbox
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.knobs
+{
+    z-index: 2;
+}
+
+.layer
+{
+    width: 100%;
+    background-color: #ebf7fc;
+    transition: 0.3s ease all;
+    z-index: 1;
+}
+#button-11
+{
+    overflow: visible;
+}
+
+#button-11 .knobs
+{
+    perspective: 70px;
+}
+
+#button-11 .knobs:before, #button-11 .knobs:after, #button-11 .knobs span
+{
+    position: absolute;
+    top: 4px;
+    border-radius: 2px;
+}
+
+#button-11 .knobs:before, #button-11 .knobs:after
+{
+    width: 20px;
+    height: 10px;
+    color: #4e4e4e;
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1;
+    padding: 9px 4px;
+}
+
+#button-11 .knobs:before
+{
+    content: 'OUI';
+    left: 4px;
+}
+
+
+#button-11 .knobs:after
+{
+    content: 'NON';
+    right: 15px;
+}
+
+#button-11 .knobs span
+{
+    right: 4px;
+    width: 33px;
+    height: 28px;
+    background-color: #03a9f4;
+    transform: rotateY(0);
+    transform-origin: 0% 50%;
+    transition: 0.6s ease all;
+    z-index: 1;
+}
+
+#button-11 .checkbox:checked + .knobs span
+{
+    transform: rotateY(-180deg);
+    background-color: #f44336;
+}
+
+#button-11 .checkbox:checked ~ .layer
+{
+    background-color: #fcebeb;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #2c3e50;
+  background-image: none;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select */
+.select {
+  position: relative;
+  display: flex;
+  width: 20em;
+  height: 3em;
+  line-height: 3;
+  background: #2c3e50;
+  overflow: hidden;
+  border-radius: .25em;
+}
+select {
+  flex: 1;
+  padding: 0 .5em;
+  color: #fff;
+  cursor: pointer;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #34495e;
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+}
+/* Transition */
+.select:hover::after {
+  color: #f39c12;
+}
+
+.loader--label
+{
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  font-family: Lato;
+}
+.loader
+{
+  height: 100%;
+  width: 100%;
+  padding: 2.55em;
+  position: fixed;
+  top: calc(40% - 30px);
+  overflow: hidden;
+  display: inline-block;
+}
+.loader--background
+{
+  background:rgba(225,230,249,0.5);
+  height:1em;
+  display:inline-block;
+  width:100%;
+  left:0;
+  top: 0.6em;;
+  position:relative;
+  z-index:-1;
+}
+
+.loader--bar {
+  top: -0.08em;
+  height: 1em;
+  position: relative;
+  width:0%;
+  display:inline-block;
+  background-image:  linear-gradient(to right, #e35f2d, #f1b450);
+  animation: growth 3s ease-in infinite;
+}
+
+@keyframes growth {
+  to {
+    width:100%;
+  }
+}
