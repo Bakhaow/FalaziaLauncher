@@ -6,10 +6,18 @@ const libsDir = dir + '/files/libs';
 const nativesDir = dir + '/files/natives';
 const dirFiles = dir + '/files';
 
-async function checkUpdate() {
-  let child = exec(dir + '/lightslark --external update https://falazia.fr/files ' + dirFiles);
+
+function checkUpdate() {
+  let child = exec(dir + '/lightslark --external update https://falazia.fr/files ' + dirFiles, {
+    detached: true,
+    stdio: ['ignore', 1, 2, 3, 4, 5, 6, 7, 8]
+  });
+  child.unref();
   child.stdout.on('data', function(data) {
     let json = JSON.parse(data);
+    if(Array.isArray(json)) {
+      json = json[0];
+    }
     let size = null;
     loggerDL.log(json);
     switch(json['type']) {
@@ -40,27 +48,71 @@ async function checkUpdate() {
   });
   child.stderr.on('data', function(data) {
     loggerDL.log('stderr: ' + data);
+    setTimeout(function(){ checkUpdate() }, 1000);
   });
   child.on('exit', code => {
     loggerDL.log('child process exited with code ' + code.toString());
   });
 }
 
-function firstDL(os , path){
-  let url;
-  if(os = 'windows') {
-    url = 'http://launcher.bakhaow.fr/lightslark.exe';
+async function download(sourceUrl, targetFile, progressCallback, length) {
+  const request = new Request(sourceUrl, {
+    headers: new Headers({'Content-Type': 'application/octet-stream'})
+  });
+
+  const response = await fetch(request);
+  if (!response.ok) {
+    throw Error(`Unable to download, server returned ${response.status} ${response.statusText}`);
   }
-  let req = request({
-      method: 'GET',
-      uri: url
-  });
-  req.pipe(fs.createWriteStream(path));
-  req.on('end', function() {
-      wait(2000);
-      loggerDL.log('checkUpdate');
-      checkUpdate();
-  });
+
+  const body = response.body;
+  if (body == null) {
+    throw Error('No response body');
+  }
+
+  const finalLength = length || parseInt(response.headers.get('Content-Length' || '0'), 10);
+  const reader = body.getReader();
+  const writer = fs.createWriteStream(targetFile);
+
+  await streamWithProgress(finalLength, reader, writer, progressCallback);
+  writer.end();
+  setTimeout(function(){ checkUpdate() }, 1000);
+}
+
+async function streamWithProgress(length, reader, writer, progressCallback) {
+  let bytesDone = 0;
+
+  while (true) {
+    const result = await reader.read();
+    if (result.done) {
+      if (progressCallback != null) {
+        progressCallback(length, 100);
+      }
+      return;
+    }
+
+    const chunk = result.value;
+    if (chunk == null) {
+      throw Error('Empty chunk received during download');
+    } else {
+      writer.write(Buffer.from(chunk));
+      if (progressCallback != null) {
+        bytesDone += chunk.byteLength;
+        const percent = length === 0 ? null : Math.floor(bytesDone / length * 100);
+        progressCallback(bytesDone, percent);
+      }
+    }
+  }
+}
+
+function firstDL() {
+  download('http://launcher.bakhaow.fr/lightslark.exe', lsPath, (bytes, percent) => document.getElementById('load-label').innerHTML = "Préparation: " + percent + "%");
+}
+
+
+function showProgress(received,total){
+    var percentage = (received * 100) / total;
+    console.log(percentage + "% | " + received + " bytes out of " + total + " bytes.");
 }
 
 function wait(ms){
@@ -80,6 +132,14 @@ function launchGame() {
         console.log('Error:', e.stack);
     }
 
+    let pseudonyme;
+    try {
+        let data = fs.readFileSync(dir + "/vOptions/user.txt", 'utf8');
+        pseudonyme = data;
+    } catch(e) {
+        console.log('Error:', e.stack);
+    }
+
     var command = 'java ' + "-Xms" + ram + "G -Xmx" + ram + "G" + ' -XX:-UseAdaptiveSizePolicy -XX:+UseConcMarkSweepGC -Djava.library.path=' + nativesDir + ' -Dfml.ignoreInvalidMinecraftCertificates=true -Dfml.ignorePatchDiscrepancies=true' + ' -cp "';
     var cp = '';
 
@@ -94,12 +154,11 @@ function launchGame() {
 
     setTimeout(async function() {
         cp = cp + dirFiles + "/minecraft.jar";
-        command = command + cp + '" net.minecraft.client.main.Main --username=' + userInput + ' --accessToken null --version 1.12.2 --gameDir ' + dirFiles + '  --assetIndex 1.12 --userProperties {} --uuid null';
+        command = command + cp + '" net.minecraft.client.main.Main --username=' + pseudonyme + ' --accessToken null --version 1.12.2 --gameDir ' + dirFiles + '  --assetIndex 1.12 --userProperties {} --uuid null';
         loggerLaunch.log("Commande de lancement: " + command);
         const launch = await exec(command);
         launch.stdout.on('data', function(data) {
           console.log('stdout: ' + data);
-          wait(5000);
           closeLauncher();
         });
         launch.stderr.on('data', function(data) {
@@ -111,5 +170,6 @@ function launchGame() {
 if(fs.existsSync(lsPath)) {
   checkUpdate();
 } else {
-  firstDL('windows', lsPath);
+  firstDL();
+  //firstDL('windows', lsPath);
 }

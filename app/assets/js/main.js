@@ -5,7 +5,6 @@ const fs = require('fs');
 const LoggerUtil = require('./assets/js/loggerutil');
 const loggerLogin = LoggerUtil('%c[Login]', 'color: #209b07; font-weight: bold;');
 const dir = remote.app.getPath('userData') + '/FalaziaLauncher';
-let userInput;
 
 function log() {
   let user = document.getElementById('pseudo');
@@ -19,7 +18,7 @@ function log() {
       loggerLogin.log("trying to connect");
       if(body == 'success_ok'){
         loggerLogin.log('Logged in as ' + user.value);
-        userInput = user.value;
+        credentialsSaver();
         ipcRenderer.send('logged-in');
       } else if(body == 'error_password'){
         loggerLogin.log('Bad credentials');
@@ -34,34 +33,40 @@ function log() {
   })
 }
 
+function r(f){/in/.test(document.readyState)?setTimeout(r,9,f):f()}
+
 function init() {
   createNotExisting(dir);
-  /*let usair = "";
-  try {
-      let data = fs.readFileSync(dir + "/vOptions/user.txt", 'utf8');
-      usair = data;
-  } catch(e) {
-    loggerLogin.log(e);
+  createNotExisting(dir + '/vOptions');
+  if(fs.existsSync(dir + "/vOptions/ram.txt")) {
+    fs.writeFile(dir + "/vOptions/ram.txt", 2, function(err) {
+      if(err) {
+          return loggerLogin.log(err);
+      }
+    })
   }
-  if(usair.length > 1)
-  document.getElementById('pseudo').value = usair;*/
+  if(fs.existsSync(dir + "/vOptions/user.txt")) {
+    try {
+        let data = fs.readFileSync(dir + "/vOptions/user.txt", 'utf8');
+        r(function(){document.getElementById('pseudo').value = data;});
+    } catch(e) {
+        loggerLogin.log('Error:', e.stack);
+    }
+  }
 }
 
-init();
-
-/*function credentialsSaver() {
+function credentialsSaver() {
+  let user = document.getElementById('pseudo');
   loggerLogin.log('Saving credentials');
-  createNotExisting(dir + '/vOptions');
   fs.writeFile(dir + "/vOptions/user.txt", user.value, function(err) {
     if(err) {
         return loggerLogin.log(err);
     }
   })
-}*/
+}
 
 function ramSaver() {
   loggerLogin.log('Saving ram');
-  createNotExisting(dir + '/vOptions');
   fs.writeFile(dir + "/vOptions/ram.txt", document.getElementById('slct').options[document.getElementById('slct').selectedIndex].value, function(err) {
     if(err) {
         return loggerLogin.log(err);

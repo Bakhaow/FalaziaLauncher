@@ -5,7 +5,7 @@ const url = require('url');
 
 // WINDOW
 let win;
-const winWidth = 425;
+const winWidth = 400;
 const winHeight = 600;
 
 function createWindow () {
