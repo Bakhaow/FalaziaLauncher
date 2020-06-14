@@ -7,21 +7,21 @@ const nativesDir = dir + '/files/natives';
 const dirFiles = dir + '/files';
 
 async function checkUpdate() {
-  const child = exec(dir + '/lightslark --external update https://falazia.fr/files ' + dir + '/files');
+  let child = exec(dir + '/lightslark --external update https://falazia.fr/files ' + dirFiles);
   child.stdout.on('data', function(data) {
     let json = JSON.parse(data);
-    var size = null;
+    let size = null;
     loggerDL.log(json);
     switch(json['type']) {
       case 'download':
         loggerDL.log('Download a new version (' + json['version'] + ')');
         loggerDL.log(json.size['compressed']);
         size = json.size['compressed'];
-        document.getElementById('load-label').html = "Lancement du téléchargement...";
+        document.getElementById('load-label').innerHTML = "Lancement du téléchargement...(v" + json['version'] + ")";
         break;
       case 'download-progress':
         loggerDL.log('Current_total: ' + json['current_total'] + ' | Speed: ' + json['speed']);
-        document.getElementById('load-label').html = "Mise à jour en cours... <br>Merci de patienter: " + (json['current_total'] / size) + "% <br>";
+        document.getElementById('load-label').innerHTML = "Mise à jour en cours... <br>Merci de patienter: " + (json['current'] / size) + "% <br>";
         break;
       case 'finish':
         loggerDL.log('Download finished in : ' + json['speed']);
@@ -29,17 +29,20 @@ async function checkUpdate() {
         break;
       case 'up-to-date':
         loggerDL.log('Up 2 Date');
-        document.getElementById('load-label').html = "Déjà à jour... <br> ... Lancement ...";
+        document.getElementById('load-label').innerHTML = "Déjà à jour <br> ... Lancement ...";
         launchGame();
         break;
       case 'update-range':
         loggerDL.log('Bad version (' + json['from'] + ') updating to version - >' + json['to']);
-        document.getElementById('load-label').value = "Passage de " + json['from'] + " à " + json['to'];
+        document.getElementById('load-label').innerHTML = "Passage de " + json['from'] + " à " + json['to'];
         break;
     }
   });
   child.stderr.on('data', function(data) {
-    console.log('stderr: ' + data);
+    loggerDL.log('stderr: ' + data);
+  });
+  child.on('exit', code => {
+    loggerDL.log('child process exited with code ' + code.toString());
   });
 }
 
@@ -54,8 +57,18 @@ function firstDL(os , path){
   });
   req.pipe(fs.createWriteStream(path));
   req.on('end', function() {
+      wait(2000);
+      loggerDL.log('checkUpdate');
       checkUpdate();
   });
+}
+
+function wait(ms){
+   var start = new Date().getTime();
+   var end = start;
+   while(end < start + ms) {
+     end = new Date().getTime();
+  }
 }
 
 function launchGame() {
@@ -86,6 +99,7 @@ function launchGame() {
         const launch = await exec(command);
         launch.stdout.on('data', function(data) {
           console.log('stdout: ' + data);
+          wait(5000);
           closeLauncher();
         });
         launch.stderr.on('data', function(data) {

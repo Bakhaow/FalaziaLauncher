@@ -70,6 +70,7 @@
 .login input[type="text"],
 .login input[type="password"],
 .login input:focus {
+    -webkit-app-region: no-drag;
     background-color: rgba(255, 255, 255, 0.9);
     border: 0px solid #4a525f;
     color: rgb(172, 155, 62);
@@ -113,6 +114,7 @@ select:-webkit-autofill {
     border-radius:2px 2px 12px 12px;
     -webkit-border-radius:2px 2px 12px 12px;
     -moz-border-radius:2px 2px 12px 12px;
+    -webkit-app-region: no-drag;
 }
 
 /* When you hover over the button */
@@ -138,6 +140,7 @@ select:-webkit-autofill {
     margin: 0 5px;
     position: relative;
     text-align: center;
+    -webkit-app-region: no-drag;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -276,6 +279,7 @@ select:-webkit-autofill {
     height: 36px;
     margin: -20px auto 0 auto;
     overflow: hidden;
+    -webkit-app-region: no-drag;
 }
 
 .button.r, .button.r .layer
@@ -294,10 +298,11 @@ select:-webkit-autofill {
     width: 100%;
     height: 100%;
     padding: 0;
-    margin: 0;
+    margin: 5px;
     opacity: 0;
     cursor: pointer;
     z-index: 3;
+    -webkit-app-region: no-drag
 }
 
 .knobs
@@ -387,6 +392,7 @@ select {
   border: 0 !important;
   background: #2c3e50;
   background-image: none;
+  -webkit-app-region: no-drag;
 }
 /* Remove IE arrow */
 select::-ms-expand {
@@ -472,4 +478,8 @@ select {
   to {
     width:100%;
   }
+}
+
+body {
+  -webkit-app-region: drag;
 }

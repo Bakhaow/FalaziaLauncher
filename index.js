@@ -16,7 +16,7 @@ function createWindow () {
     center: true,
     icon: getPlatformIcon('logo'),
     frame: false,
-    //resizable: false,
+    resizable: false,
     webPreferences: {nodeIntegration: true}
   });
 
